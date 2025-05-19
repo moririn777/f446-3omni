@@ -21,3 +21,5 @@ release
 *.launch
 
 .metadata/
+
+.vscode/
