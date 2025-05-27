@@ -31,12 +31,16 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-
+extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim2;
+extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim4;
+extern UART_HandleTypeDef huart4;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -49,8 +53,6 @@ extern "C" {
 
 /* USER CODE END EM */
 
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
-
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -59,6 +61,7 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+/*TODO:iocファイルを編集した場合変更*/
 #define encoder2_A_Pin GPIO_PIN_0
 #define encoder2_A_GPIO_Port GPIOA
 #define encoder2_B_Pin GPIO_PIN_1
@@ -96,6 +99,38 @@ void Error_Handler(void);
 #define encoder3_B_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
+#define PULSES_PER_REV 2048 // エンコーダの1回転あたりのパルス数
+
+// Motor 1 (TIM2_CH4, PB1)
+#define MD1_PWM_TIMER &htim2
+#define MD1_PWM_CHANNEL TIM_CHANNEL_4
+#define MD1_DIR_PORT GPIOB
+#define MD1_DIR_PIN GPIO_PIN_1
+
+// Motor 2 (TIM3_CH3, PC7)
+#define MD2_PWM_TIMER &htim3
+#define MD2_PWM_CHANNEL TIM_CHANNEL_3
+#define MD2_DIR_PORT GPIOC
+#define MD2_DIR_PIN GPIO_PIN_7
+
+// Motor 3 (TIM1_CH1, PC9)
+#define MD3_PWM_TIMER &htim1
+#define MD3_PWM_CHANNEL TIM_CHANNEL_1
+#define MD3_DIR_PORT GPIOC
+#define MD3_DIR_PIN GPIO_PIN_9
+
+// エンコーダタイマー定義
+#define ENC1_TIMER &htim3 // PA6, PA7
+#define ENC2_TIMER &htim2 // PA0, PA1
+#define ENC3_TIMER &htim4 // PB6, PB7
+
+// X相のピン定義 (EXTI割り込み用)
+#define ENC1_X_PIN GPIO_PIN_4 // PC4
+#define ENC1_X_PORT GPIOC
+#define ENC2_X_PIN GPIO_PIN_2 // PA2
+#define ENC2_X_PORT GPIOA
+#define ENC3_X_PIN GPIO_PIN_5 // PB5
+#define ENC3_X_PORT GPIOB
 
 /* USER CODE END Private defines */
 
